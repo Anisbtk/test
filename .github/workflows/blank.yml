@@ -19,7 +19,6 @@ jobs:
           node-version: 14
 
       - name: Install dependencies
-        # Navigate to the project's root directory
         working-directory: ./path/to/project
         run: npm ci
 
