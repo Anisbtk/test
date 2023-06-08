@@ -23,6 +23,9 @@ The pipeline is triggered on every push to the `main` branch. It performs the fo
 8. **Upload executables**: Uses the `actions/upload-release-asset` action to upload the built executables as release assets. The assets are attached to the created GitHub release.
 
 -The pipeline includes a step to install the required JavaScript package using npm.
+
 -It uses the pkg command to create standalone executables from the TypeScript binary. Alternatively, you can use nexe by modifying the relevant step.
+
 -The pkg command is executed with the appropriate targets (node12-linux-x64, node12-win-x64, node12-macos-x64) to create executables for multiple platforms.
+
 -The pipeline uses the actions/create-release and actions/upload-release-asset actions to create a GitHub release and upload the generated executables as artifacts.
