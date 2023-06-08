@@ -24,26 +24,36 @@ jobs:
       - name: Modify package.json
         run: |
           echo '{"bin": "./index.js"}' > package.json
+        env:
+          ACTIONS_STEP_DEBUG: true
 
       - name: Create placeholder executable
-        run: echo "// Placeholder executable" > index.js
+        run: |
+          echo "// Placeholder executable" > index.js
+        env:
+          ACTIONS_STEP_DEBUG: true
 
       - name: Build executables
         run: npx pkg . --targets node12-linux-x64,node12-win-x64,node12-macos-x64 --output ./path/to/project/executable
+        env:
+          ACTIONS_STEP_DEBUG: true
 
       - name: Find executable file
         id: find_executable
         run: |
           echo "::set-output name=executable_path::$(find . -type f -name '*.exe')"
+        env:
+          ACTIONS_STEP_DEBUG: true
 
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+          ACTIONS_STEP_DEBUG: true
         with:
-          tag_name: v2.21.0
-          release_name: Release v2.21.0
+          tag_name: v2.31.0
+          release_name: Release v2.31.0
           body: |
             This is the first release of the project.
           draft: false
@@ -53,6 +63,7 @@ jobs:
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+          ACTIONS_STEP_DEBUG: true
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ${{ steps.find_executable.outputs.executable_path }}
