@@ -27,6 +27,9 @@ jobs:
       - name: Modify package.json
         run: |
          echo '{"bin": "./index.js"}' > package.json
+       
+      - name: Create placeholder executable
+        run: echo "// Placeholder executable" > index.js  
 
       - name: Build executables
         run: npx pkg . --targets node12-linux-x64,node12-win-x64,node12-macos-x64 --output ./path/to/project/executable
