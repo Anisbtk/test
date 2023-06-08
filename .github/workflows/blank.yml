@@ -42,8 +42,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
         with:
-          tag_name: v2.1.0
-          release_name: Release v2.1.0
+          tag_name: v2.21.0
+          release_name: Release v2.21.0
           body: |
             This is the first release of the project.
           draft: false
@@ -52,7 +52,7 @@ jobs:
       - name: Upload executables
         uses: actions/upload-release-asset@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ${{ steps.find_executable.outputs.executable_path }}
