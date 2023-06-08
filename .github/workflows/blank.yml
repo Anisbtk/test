@@ -19,17 +19,12 @@ jobs:
           node-version: 14
 
       - name: Install dependencies
-        working-directory: ./test
         run: npm ci --ignore-scripts
 
       - name: Build executables
-        # Execute the build command specific to your project
-        working-directory: ./path/to/project
         run: npm run build
 
       - name: Create executables
-        # Execute the command to create executables using pkg or nexe
-        working-directory: ./path/to/project
         run: npx pkg . --targets node12-linux-x64,node12-win-x64,node12-macos-x64
 
       - name: Create Release
