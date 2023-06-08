@@ -1,5 +1,4 @@
 name: Create Executables and Release
-
 on:
   push:
     branches:
