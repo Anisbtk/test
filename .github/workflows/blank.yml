@@ -31,8 +31,15 @@ jobs:
       #- name: Build executables
        # run: npm run build
 
+      - name: Create placeholder executable
+        run: echo "// Placeholder executable" > index.js
+
+      - name: Determine current directory
+        id: get_directory
+        run: echo "::set-output name=directory::$(pwd)"
+
       - name: Build executables
-        run: npx pkg . --targets node12-linux-x64,node12-win-x64,node12-macos-x64
+        run: npx pkg . --targets node12-linux-x64,node12-win-x64,node12-macos-x64 --output ${{ steps.get_directory.outputs.directory }}/executable
 
       - name: Create Release
         id: create_release
