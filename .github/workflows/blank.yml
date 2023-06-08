@@ -12,48 +12,51 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        env:
+          ACTIONS_STEP_DEBUG: true
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
           node-version: 14
+        env:
+          ACTIONS_STEP_DEBUG: true
 
-      
       - name: Install dependencies
-        run: npm install
+        run: npm ci --ignore-scripts
+        env:
+          ACTIONS_STEP_DEBUG: true
 
-   
-        
-      - name: Modify package.json
-        run: |
-         echo '{"bin": "./index.js"}' > package.json
-       
       - name: Create placeholder executable
-        run: echo "// Placeholder executable" > index.js  
+        run: echo "// Placeholder executable" > index.js
+        env:
+          ACTIONS_STEP_DEBUG: true
 
       - name: Build executables
         run: npx pkg . --targets node12-linux-x64,node12-win-x64,node12-macos-x64 --output ./path/to/project/executable
-
+        env:
+          ACTIONS_STEP_DEBUG: true
 
       - name: Create Release
-        id: create_release
         uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           tag_name: v1.0.0
           release_name: Release v1.0.0
           body: |
             This is the first release of the project.
           draft: false
           prerelease: false
+        env:
+          ACTIONS_STEP_DEBUG: true
 
       - name: Upload executables
         uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./path/to/project/executable
           asset_name: executable
           asset_content_type: application/octet-stream
+        env:
+          ACTIONS_STEP_DEBUG: true
