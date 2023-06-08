@@ -52,8 +52,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
           ACTIONS_STEP_DEBUG: true
         with:
-          tag_name: v2.31.0
-          release_name: Release v2.31.0
+          tag_name: v2.41.0
+          release_name: Release v2.41.0
           body: |
             This is the first release of the project.
           draft: false
