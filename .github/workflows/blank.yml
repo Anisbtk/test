@@ -23,7 +23,13 @@ jobs:
           ACTIONS_STEP_DEBUG: true
 
       - name: Install dependencies
-        run: npm ci --ignore-scripts
+        run: npm install
+        env:
+          ACTIONS_STEP_DEBUG: true
+
+      - name: Modify package.json
+        run: |
+          echo '{"bin": "./index.js"}' > package.json
         env:
           ACTIONS_STEP_DEBUG: true
 
@@ -38,22 +44,24 @@ jobs:
           ACTIONS_STEP_DEBUG: true
 
       - name: Create Release
+        id: create_release
         uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
           tag_name: v1.0.0
           release_name: Release v1.0.0
           body: |
             This is the first release of the project.
           draft: false
           prerelease: false
-        env:
-          ACTIONS_STEP_DEBUG: true
+
 
       - name: Upload executables
         uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./path/to/project/executable
           asset_name: executable
