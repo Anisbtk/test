@@ -12,36 +12,28 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        env:
-          ACTIONS_STEP_DEBUG: true
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
           node-version: 14
-        env:
-          ACTIONS_STEP_DEBUG: true
 
+      
       - name: Install dependencies
         run: npm install
-        env:
-          ACTIONS_STEP_DEBUG: true
 
+   
+        
       - name: Modify package.json
         run: |
-          echo '{"bin": "./index.js"}' > package.json
-        env:
-          ACTIONS_STEP_DEBUG: true
-
+         echo '{"bin": "./index.js"}' > package.json
+       
       - name: Create placeholder executable
-        run: echo "// Placeholder executable" > index.js
-        env:
-          ACTIONS_STEP_DEBUG: true
+        run: echo "// Placeholder executable" > index.js  
 
       - name: Build executables
         run: npx pkg . --targets node12-linux-x64,node12-win-x64,node12-macos-x64 --output ./path/to/project/executable
-        env:
-          ACTIONS_STEP_DEBUG: true
+
 
       - name: Create Release
         id: create_release
@@ -56,7 +48,6 @@ jobs:
           draft: false
           prerelease: false
 
-
       - name: Upload executables
         uses: actions/upload-release-asset@v1
         env:
@@ -66,5 +57,3 @@ jobs:
           asset_path: ./path/to/project/executable
           asset_name: executable
           asset_content_type: application/octet-stream
-        env:
-          ACTIONS_STEP_DEBUG: true
