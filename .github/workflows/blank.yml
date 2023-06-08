@@ -19,9 +19,10 @@ jobs:
           node-version: 14
 
       
-
-
       - name: Install dependencies
+        run: npm install
+
+      - name: Install dependencies with lockfile
         run: npm ci --ignore-scripts
         
       - name: Modify package.json
