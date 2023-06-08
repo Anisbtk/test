@@ -13,9 +13,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Generate package.json
+      - name: Modify package.json
         run: |
-          echo '{"name": "test", "version": "1.0.0"}' > package.json
+          echo '
+          {
+            "name": "your-package-name",
+            "version": "1.0.0",
+            "bin": {
+              "your-executable-name": "index.js"
+            },
+            ...
+          }' > package.json
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
@@ -23,31 +31,10 @@ jobs:
           node-version: 14
 
       - name: Install dependencies
-        run: npm install
-
-      - name: Install dependencies with lockfile
-        run: npm ci --ignore-scripts
-
-      #- name: Build executables
-       # run: npm run build
-
-      - name: Modify package.json
-        run: |
-         echo '
-         {
-          "name": "your-package-name",
-          "version": "1.0.0",
-          "bin": {
-        "your-executable-name": "index.js"
-        },
-        ... }' > package.json
-
-      - name: Determine current directory
-        id: get_directory
-        run: echo "::set-output name=directory::$(pwd)"
+        run: npm ci
 
       - name: Build executables
-        run: npx pkg . --targets node12-linux-x64,node12-win-x64,node12-macos-x64 --output ${{ steps.get_directory.outputs.directory }}/executable
+        run: npx pkg . --targets node12-linux-x64,node12-win-x64,node12-macos-x64 --output /home/runner/work/test/test/executable
 
       - name: Create Release
         id: create_release
@@ -68,6 +55,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./path/to/project/executables/*
-          asset_name: executables.zip
-          asset_content_type: application/zip
+          asset_path: /home/runner/work/test/test/executable
+          asset_name: executable
+          asset_content_type: application/octet-stream
