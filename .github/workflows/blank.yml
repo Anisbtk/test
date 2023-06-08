@@ -19,8 +19,8 @@ jobs:
           node-version: 14
 
       - name: Install dependencies
-        working-directory: ./path/to/project
-        run: npm ci
+        working-directory: ./test
+        run: npm ci --ignore-scripts
 
       - name: Build executables
         # Execute the build command specific to your project
