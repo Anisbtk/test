@@ -28,8 +28,8 @@ jobs:
       - name: Install dependencies with lockfile
         run: npm ci --ignore-scripts
 
-     # - name: Build executables
-       # run: npm run build
+      - name: Build executables
+        run: npm run build
 
       - name: Build executables
         run: npx pkg . --targets node12-linux-x64,node12-win-x64,node12-macos-x64
