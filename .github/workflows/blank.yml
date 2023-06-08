@@ -31,8 +31,16 @@ jobs:
       #- name: Build executables
        # run: npm run build
 
-      - name: Create placeholder executable
-        run: echo "// Placeholder executable" > index.js
+      - name: Modify package.json
+        run: |
+         echo '
+         {
+          "name": "your-package-name",
+          "version": "1.0.0",
+          "bin": {
+        "your-executable-name": "index.js"
+        },
+        ... }' > package.json
 
       - name: Determine current directory
         id: get_directory
