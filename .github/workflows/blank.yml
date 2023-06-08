@@ -27,9 +27,14 @@ jobs:
 
       - name: Install dependencies with lockfile
         run: npm ci --ignore-scripts
-
-      - name: Build executables
-        run: npm run build
+      - name: Build
+        run: |
+          # Add your build command here
+          # For example, if you are using TypeScript, you can run:
+           npm run build
+          echo "Running the build step"
+      #- name: Build executables
+       # run: npm run build
 
       - name: Build executables
         run: npx pkg . --targets node12-linux-x64,node12-win-x64,node12-macos-x64
